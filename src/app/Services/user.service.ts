@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { userInfo } from '../@types/user-info';
-import { Observable, of } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { Observable, of, throwError } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class UserService {
+  private readonly dbUrl = 'http://localhost:3004/users';
 
   constructor(private httpClient: HttpClient,
     private router: Router) { }
@@ -25,21 +26,36 @@ export class UserService {
   }
 
   private userAuthentication(user: userInfo): Observable<any> {
-    const response: any = {};
+    return this.httpClient.get<userInfo[]>(this.dbUrl).pipe(
+      map((userResponse: userInfo[]) => {
+        const response: any = {
+          success: false,
+          user: user,
+        };
 
-    //Fazer uma pesquisa na lista de users
-    let userResponse = { email: "", password: "" }
+        console.log(userResponse)
+        console.log(user)
 
-    if (user.email === userResponse.email && user.password == userResponse.password) {
-      response.success = true;
-      response.user = user;
-      response.token = "mylittletoken";
-      return of(response);
-    }
+        const authenticatedUser = userResponse.find(
+          (userObj: userInfo) =>
+            userObj.email.toLowerCase() === user.email.toLowerCase() &&
+            userObj.password === user.password
+        );
 
-    response.success = false;
-    response.user = user;
-    return of(response);
+        console.log(authenticatedUser)
+
+        if (authenticatedUser) {
+          response.success = true;
+          response.token = "mylittletoken";
+        }
+
+        return response;
+      }),
+      catchError((error: HttpErrorResponse) => {
+        console.error('HTTP error:', error);
+        return throwError('Something went wrong. Please try again later.');
+      })
+    );
   }
 
   logout() {
