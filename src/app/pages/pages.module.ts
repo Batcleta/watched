@@ -2,9 +2,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { PagesRoutingModule } from './pages-routing.module';
+import { HttpClientModule } from '@angular/common/http';
 import { PagesComponent } from './pages.component';
 import { MoviesListComponent } from './movies-list/movies-list.component';
 import { LoginComponent } from './login/login.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -15,9 +17,11 @@ import { LoginComponent } from './login/login.component';
   ],
   imports: [
     CommonModule,
-    PagesRoutingModule
+    PagesRoutingModule,
+    ReactiveFormsModule,
+    HttpClientModule
   ],
-  exports:[
+  exports: [
     PagesComponent
   ]
 })
