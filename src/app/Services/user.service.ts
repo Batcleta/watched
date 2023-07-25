@@ -33,16 +33,11 @@ export class UserService {
           user: user,
         };
 
-        console.log(userResponse)
-        console.log(user)
-
         const authenticatedUser = userResponse.find(
           (userObj: userInfo) =>
             userObj.email.toLowerCase() === user.email.toLowerCase() &&
             userObj.password === user.password
         );
-
-        console.log(authenticatedUser)
 
         if (authenticatedUser) {
           response.success = true;
@@ -63,8 +58,10 @@ export class UserService {
     this.router.navigate(['login']);
   }
 
-  loggeduser(): userInfo {
-    let retrievedObject = localStorage.getItem('usuario');
+  get loggeduser(): userInfo {
+    let retrievedObject = localStorage.getItem('user');
+
+    console.log(retrievedObject && JSON.parse(atob(retrievedObject)))
     return retrievedObject
       ? JSON.parse(atob(retrievedObject))
       : null;

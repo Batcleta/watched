@@ -3,10 +3,12 @@ import { RouterModule, Routes } from '@angular/router';
 import { MoviesListComponent } from './movies-list/movies-list.component';
 import { LoginComponent } from './login/login.component';
 import { PagesComponent } from './pages.component';
+import { unauthorizedUserGuard } from '../Services/guards/unauthorized-user.guard';
+import { authenticatedUserGuard } from '../Services/guards/authenticated-user.guard';
 
 const routes: Routes = [
   {
-    path: '', component: PagesComponent,
+    path: '', component: PagesComponent, canActivate: [authenticatedUserGuard],
     children: [
       {
         path: "",
@@ -16,7 +18,7 @@ const routes: Routes = [
     ],
   },
   {
-    path: 'login', component: LoginComponent,
+    path: 'login', component: LoginComponent, canActivate: [unauthorizedUserGuard],
   },
 ];
 
