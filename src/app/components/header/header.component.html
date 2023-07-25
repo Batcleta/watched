@@ -1,1 +1,18 @@
-<p>header works!</p>
+<div class="text-indigo-200 flex w-full justify-between p-4 items-center ">
+    <div><img width="35" src="assets/watched-logo.png" alt="watched logo" /></div>
+    <div>
+        <ul class="flex gap-10 uppercase text-sm font-semibold">
+            <li><a href="" class="hover:text-indigo-400 transition">my movies</a></li>
+            <li><a href="" class="hover:text-indigo-400 transition">add movie</a></li>
+        </ul>
+    </div>
+    <div class="flex gap-2 items-center group">
+        <a class="flex uppercase text-sm font-semibold group-hover:text-indigo-400 transition" href=""
+            (click)="logout()">logout</a>
+        <svg class="w-5 h-5 group-hover:text-indigo-400 transition" xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24" fill="none">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M15 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h8m4-9-4-4m4 4-4 4m4-4H9" />
+        </svg>
+    </div>
+</div>

@@ -1,1 +1,14 @@
-<p>movies-list works!</p>
+
+<div class="py-5 px-4">
+    <h3 class=" text-lg text-indigo-400 font-medium px-1">My watch List</h3>
+    <div class="w-full border-b border-slate-500 mt-2 mb-7"></div>
+    <app-card [movies]="nonWatchedMovies" (excludeMovie)="onMovieExcluded($event)"
+        class="flex gap-2 flex-wrap justify-center w-full mt-4"></app-card>
+</div>
+
+<div class="py-5 px-4">
+    <h3 class=" text-lg text-indigo-400 font-medium px-1">My Watched Movies</h3>
+    <div class="w-full border-b border-slate-500 mt-2 mb-7"></div>
+    <app-card [movies]="watchedMovies" (excludeMovie)="onMovieExcluded($event)"
+        class="flex gap-2 flex-wrap justify-center"></app-card>
+</div>

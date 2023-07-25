@@ -1,0 +1,62 @@
+<p>movie-details works!</p>
+<h2 class="mt-10">
+    <a class="bg-indigo-500 text-white py-2 px-6 rounded-2xl hover:scale-105 transition-all" routerLink="">{{ back }}</a>
+  </h2>
+  
+  
+  <div class=" flex gap-6 mt-14 p-5 bg-slate-800 rounded-xl" *ngIf="movie">
+    <div class="group-hover:scale-125 transition-all min-w-[250px] max-w-[250px]">
+      <img
+        width="350"
+        [src]="
+          'https://image.tmdb.org/t/p/w220_and_h330_face' + movie.poster_path
+        "
+        [alt]="movie.original_title"
+      />
+    </div>
+    <div class="text-white">
+      <div>
+        <div class="flex gap-10 items-center">
+          <h1 class="font-semibold text-2xl">{{ movie.original_title }}</h1>
+          <div
+            class="cursor-pointer border py-1 px-7 rounded-2xl font-medium hover:text-slate-800 hover:bg-white transition-all"
+            (click)="onMovieWatched()"
+            [class.text-white]="!movie.watched"
+            [class.font-normal]="movie.watched"
+            [class.bg-indigo-500]="movie.watched"
+            [class.border-indigo-500]="movie.watched"
+          >
+            {{ movie.watched ? "Watched" : "Watch Now" }}
+          </div>
+        </div>
+        <small class="text-slate-400">Release date: {{ movie.release_date }}</small>
+  
+        <p class="mt-3">
+          Vote: <b> {{ movie.vote_average }}</b>
+        </p>
+  
+        <h3 class="mt-4 font-bold">Overview:</h3>
+        <p class="mt-1 text-slate-400">{{ movie.overview }}</p>
+      </div>
+  
+      <div *ngIf="movie.rating">
+        <div class="w-36 border-b border-slate-500 mt-4"></div>
+  
+        <div class="flex gap-6 items-center">
+          <h3 class="mt-4 font-bold">Rate:</h3>
+          <div *ngIf="movie.rating === 'liked'">👍</div>
+          <div *ngIf="movie.rating === 'disliked'">👎</div>
+        </div>
+        <h3 class="mt-3 font-bold">Comments:</h3>
+        <p class="text-slate-400">" {{ movie.comment }} "</p>
+      </div>
+    </div>
+  </div>
+  
+  <app-rate-modal
+    *ngIf="isModalOpen"
+    (rateSubmitted)="onModalSubmited($event)"
+    (closeModal)="onCloseModal()"
+  >
+  </app-rate-modal>
+  
