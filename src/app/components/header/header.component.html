@@ -2,11 +2,13 @@
     <div><img width="35" src="assets/watched-logo.png" alt="watched logo" /></div>
     <div>
         <ul class="flex gap-10 uppercase text-sm font-semibold">
-            <li><a href="" class="hover:text-indigo-400 transition">my movies</a></li>
-            <li><a href="" class="hover:text-indigo-400 transition">add movie</a></li>
+            <li><a routerLink="" class="hover:text-indigo-400 transition">my movies</a></li>
+            <li><a routerLink="new-movie" class="hover:text-indigo-400 transition">add movie</a></li>
+
         </ul>
     </div>
     <div class="flex gap-2 items-center group">
+        <div class="flex gap-2 mr-10"><strong>Hello</strong>{{ userName }}</div>
         <a class="flex uppercase text-sm font-semibold group-hover:text-indigo-400 transition" href=""
             (click)="logout()">logout</a>
         <svg class="w-5 h-5 group-hover:text-indigo-400 transition" xmlns="http://www.w3.org/2000/svg"

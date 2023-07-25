@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { movieObject } from 'src/app/@types/movie-object-type';
 import { MovieService } from 'src/app/Services/movie.service';
@@ -8,7 +8,7 @@ import { MovieService } from 'src/app/Services/movie.service';
   templateUrl: './movies-list.component.html',
   styleUrls: ['./movies-list.component.css']
 })
-export class MoviesListComponent {
+export class MoviesListComponent implements OnInit {
   movies: movieObject[] = [];
   watchedMovie!: movieObject;
 
@@ -44,9 +44,9 @@ export class MoviesListComponent {
       });
   }
 
-  async onMovieExcluded(movie: movieObject) {
+  onMovieExcluded(movie: movieObject) {
     try {
-      await this.movieService.deleteMovie(movie);
+      this.movieService.deleteMovie(movie);
       window.location.reload()
       alert('Movie deleted successfully:');
     } catch (error) {

@@ -20,7 +20,7 @@ export class UserService {
     return this.userAuthentication(user).pipe(tap((response) => {
       if (!response.success) return;
       localStorage.setItem('token', btoa(JSON.stringify(response.token)));
-      localStorage.setItem('user', btoa(JSON.stringify(user)));
+      localStorage.setItem('user', btoa(JSON.stringify(response.user)));
       this.router.navigate(['']);
     }))
   }
@@ -30,7 +30,7 @@ export class UserService {
       map((userResponse: userInfo[]) => {
         const response: any = {
           success: false,
-          user: user,
+          user: userResponse,
         };
 
         const authenticatedUser = userResponse.find(
@@ -60,8 +60,6 @@ export class UserService {
 
   get loggeduser(): userInfo {
     let retrievedObject = localStorage.getItem('user');
-
-    console.log(retrievedObject && JSON.parse(atob(retrievedObject)))
     return retrievedObject
       ? JSON.parse(atob(retrievedObject))
       : null;

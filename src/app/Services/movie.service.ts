@@ -30,7 +30,8 @@ export class MovieService {
     );
   }
 
-  addNewMovie(movie: movieObject): Observable<movieObject | undefined> {
+  addNewMovie(movie: movieObject): Observable<movieObject> {
+    console.log(movie)
     return from(this.http.post<movieObject>(this.dbUrl, movie)).pipe(
       catchError((error) => {
         throw error;
@@ -38,12 +39,14 @@ export class MovieService {
     );
   }
 
-  deleteMovie(movie: movieObject): Observable<movieObject | undefined> {
-    const url = `${this.dbUrl}/${movie.id}`;
-    return from(this.http.delete<movieObject>(url)).pipe(
-      catchError((error) => {
-        throw error;
-      })
-    );
+  deleteMovie(movie: movieObject): string {
+    try {
+      const url = `${this.dbUrl}/${movie.id}`
+      this.http.delete<movieObject>(url).subscribe((resp: any) => console.log(resp))
+      return "Deleted succesfully";
+    } catch (error) {
+      throw error;
+    }
+
   }
 }
