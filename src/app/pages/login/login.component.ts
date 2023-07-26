@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
     this.userService.login(user).subscribe((resp) => {
       if (!resp.success) {
         //snackbar or an alert 
-        alert("Deu ruim")
+        alert("incorrect user or password ")
       }
     })
   }

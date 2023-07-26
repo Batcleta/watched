@@ -22,7 +22,7 @@ export class ThemoviedbService {
     return this.http.get<themoviedbResponse>(url, { headers }).pipe(
       catchError((error) => {
         console.error('Error fetching movies:', error);
-        return throwError('Something went wrong. Please try again later.'); // Throw a custom error message.
+        return throwError('Something went wrong. Please try again later.');
       })
     );
   }

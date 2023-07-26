@@ -178,11 +178,14 @@
       "overview": "When his attempt to save his family inadvertently alters the future, Barry Allen becomes trapped in a reality in which General Zod has returned and there are no Super Heroes to turn to. In order to save the world that he is in and return to the future that he knows, Barry's only hope is to race for his life. But will making the ultimate sacrifice be enough to reset the universe?",
       "popularity": 965.786,
       "poster_path": "/rktDFPbfHfUbArZ6OOOKsXcv0Bm.jpg",
-      "release_date": "2023-06-13",
+      "release_date": "12/06/2023",
       "title": "The Flash",
       "video": false,
       "vote_average": 6.7,
-      "vote_count": 639
+      "vote_count": 639,
+      "watched": true,
+      "rating": "liked",
+      "comment": "that was awesome"
     },
     {
       "adult": false,
@@ -630,11 +633,14 @@
       "overview": "Peter Parker is unmasked and no longer able to separate his normal life from the high-stakes of being a super-hero. When he asks for help from Doctor Strange the stakes become even more dangerous, forcing him to discover what it truly means to be Spider-Man.",
       "popularity": 366.742,
       "poster_path": "/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg",
-      "release_date": "2021-12-15",
+      "release_date": "14/12/2021",
       "title": "Spider-Man: No Way Home",
       "video": false,
       "vote_average": 8,
-      "vote_count": 17695
+      "vote_count": 17695,
+      "watched": true,
+      "rating": "liked",
+      "comment": "asdasdasd"
     },
     {
       "adult": false,
@@ -816,6 +822,30 @@
       "vote_average": 6.8,
       "vote_count": 604,
       "user_id": 1
+    },
+    {
+      "adult": false,
+      "backdrop_path": null,
+      "genre_ids": [
+        28,
+        80,
+        53
+      ],
+      "id": 755679,
+      "original_language": "en",
+      "original_title": "Fast X: Part 2",
+      "overview": "The eleventh installment in The Fast Saga.",
+      "popularity": 27.968,
+      "poster_path": "/lD8V3DBban95Mxz4sjuA81Tw771.jpg",
+      "release_date": "03/04/2025",
+      "title": "Fast X: Part 2",
+      "video": false,
+      "vote_average": 0,
+      "vote_count": 0,
+      "user_id": 1,
+      "watched": true,
+      "rating": "disliked",
+      "comment": "crap"
     }
   ],
   "users": [
