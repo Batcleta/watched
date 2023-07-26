@@ -1,23 +1,64 @@
-<form [formGroup]="formLogin" (ngSubmit)="login()" *ngIf="formLogin">
-
+<form
+  [formGroup]="formLogin"
+  (ngSubmit)="login()"
+  *ngIf="formLogin"
+  class="min-h-screen flex items-center justify-center"
+>
+  <div class="max-w-md w-full px-6 py-8 bg-white rounded-lg shadow-md">
+    <div class="w-full flex justify-center mb-10">
+      <img width="80" src="assets/watched-logo.png" alt="watched logo" />
+    </div>
+    <div class="w-full flex justify-center mb-20 text-xl font-semibold">
+      Login to joy
+    </div>
     <div>
-        <label for="email">Email</label>
-        <input type="email" id="email" formControlName="email" />
-        <div *ngIf="formLogin.get('email')?.invalid && formLogin.get('email')?.touched">
-            <div *ngIf="formLogin.get('email')?.errors?.['required']">Email is required.</div>
-            <div *ngIf="formLogin.get('email')?.errors?.['email']">Invalid email format.</div>
+      <label for="email">Email</label>
+      <input
+        type="email"
+        id="email"
+        formControlName="email"
+        class="w-full mt-2 px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:border-indigo-500"
+      />
+      <div
+        *ngIf="
+          formLogin.get('email')?.invalid && formLogin.get('email')?.touched
+        "
+      >
+        <div *ngIf="formLogin.get('email')?.errors?.['required']">
+          Email is required.
         </div>
+        <div *ngIf="formLogin.get('email')?.errors?.['email']">
+          Invalid email format.
+        </div>
+      </div>
     </div>
 
-    <div>
-        <label for="password">Password</label>
-        <input type="password" id="password" formControlName="password" />
-        <div *ngIf="formLogin.get('password')?.invalid && formLogin.get('password')?.touched">
-            <div *ngIf="formLogin.get('password')?.errors?.['required']">Email is required.</div>
-           
+    <div class="mt-4">
+      <label for="password">Password</label>
+      <input
+        type="password"
+        id="password"
+        formControlName="password"
+        class="w-full mt-2 px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:border-indigo-500"
+      />
+      <div
+        *ngIf="
+          formLogin.get('password')?.invalid &&
+          formLogin.get('password')?.touched
+        "
+      >
+        <div *ngIf="formLogin.get('password')?.errors?.['required']">
+          Password is required.
         </div>
+      </div>
     </div>
 
-
-    <button type="submit" [disabled]="formLogin.invalid">Login</button>
+    <button
+      type="submit"
+      [disabled]="formLogin.invalid"
+      class="w-full mt-6 bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50"
+    >
+      Login
+    </button>
+  </div>
 </form>
