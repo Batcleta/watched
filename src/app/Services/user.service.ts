@@ -30,7 +30,6 @@ export class UserService {
       map((userResponse: userInfo[]) => {
         const response: any = {
           success: false,
-          user: userResponse[0],
         };
 
         const authenticatedUser = userResponse.find(
@@ -41,7 +40,8 @@ export class UserService {
 
         if (authenticatedUser) {
           response.success = true;
-          response.token = "mylittletoken";
+          response.user = authenticatedUser,
+            response.token = "mylittletoken";
         }
 
         return response;
