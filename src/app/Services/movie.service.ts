@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, from } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { Observable, from, of } from 'rxjs';
+import { catchError, switchMap, map } from 'rxjs/operators';
 import { movieObject } from '../@types/movie-object-type';
 
 @Injectable({
@@ -31,10 +31,19 @@ export class MovieService {
   }
 
   addNewMovie(movie: movieObject): Observable<movieObject> {
-    console.log(movie)
-    return from(this.http.post<movieObject>(this.dbUrl, movie)).pipe(
-      catchError((error) => {
-        throw error;
+
+    return this.checkIfExists(movie).pipe(
+      switchMap((exists: boolean) => {
+
+        if (exists) {
+          throw new Error('Movie with the same ID already exists.');
+        }
+
+        return this.http.post<movieObject>(this.dbUrl, movie).pipe(
+          catchError((error) => {
+            throw error;
+          })
+        );
       })
     );
   }
@@ -48,5 +57,26 @@ export class MovieService {
       throw error;
     }
 
+  }
+
+  getMovieById(movieId: number): Observable<movieObject | null> {
+    const url = `${this.dbUrl}/${movieId}`;
+
+    console.log(url)
+    return this.http.get<movieObject>(url).pipe(
+      catchError((error) => {
+
+        if (error.status === 404) {
+          return of(null);
+        }
+        throw error;
+      })
+    );
+  }
+
+  checkIfExists(movie: movieObject): Observable<boolean> {
+    return this.getMovieById(movie.id).pipe(
+      map((movie: movieObject | null) => !!movie?.id)
+    );
   }
 }

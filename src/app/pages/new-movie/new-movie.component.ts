@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
 import { movieObject } from 'src/app/@types/movie-object-type';
 import { MovieService } from 'src/app/Services/movie.service';
 import { ThemoviedbService } from 'src/app/Services/themoviedb.service';
@@ -28,7 +27,18 @@ export class NewMovieComponent implements OnInit {
     });
   }
 
-  ngOnInit() { }
+  ngOnInit() { this.fetchMovies() }
+
+  fetchMovies() {
+    this.movieService.getMoviesList().subscribe(
+      (movies: movieObject[]) => {
+        this.dbMovies = movies
+      },
+      (error) => {
+        console.error('Error fetching movies:', error);
+      }
+    );
+  }
 
   searchMovies() {
     if (this.searchForm.valid) {
@@ -45,6 +55,22 @@ export class NewMovieComponent implements OnInit {
     }
   }
 
+  selectMovie(movie: movieObject) {
+    console.log(movie)
+    this.movieService.addNewMovie(movie)?.subscribe(
+      (newMovie: movieObject | undefined) => {
+        if (newMovie) {
+          alert(`The movie ${newMovie?.original_title} was successfully added`);
+        } else {
+          alert('Movie already exists');
+        }
+      },
+      (error) => {
+        alert(error);
+      }
+    );
+  }
+
   filterMovies(movies: movieObject[]): movieObject[] {
     return movies.filter(
       (movie) =>
@@ -54,33 +80,9 @@ export class NewMovieComponent implements OnInit {
     );
   }
 
-  selectMovie(movie: movieObject) {
-    this.movieService.addNewMovie(movie).subscribe(
-      (newMovie: movieObject | undefined) => {
-        if (newMovie) {
-          alert(`The movie ${newMovie?.original_title} was successfully added`);
-        } else {
-          alert('Failed to add the movie.');
-        }
-      },
-      (error) => {
-        console.error('Error adding movie:', error);
-        alert('An error occurred while adding the movie. Please try again later.');
-      }
-    );
-  }
 
-  fetchMovies() {
-    this.movieService.getMoviesList().subscribe(
-      (movies: movieObject[]) => {
-        this.dbMovies = movies
-      },
-      (error) => {
-        console.error('Error fetching movies:', error);
-      }
-    );
 
-  }
+
 
   isMovieAlreadyAdded(movieId: number): boolean {
     return this.dbMovies.some((movie) => movie.id === movieId);
