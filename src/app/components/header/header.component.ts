@@ -23,9 +23,8 @@ export class HeaderComponent implements OnInit {
   getUser() {
 
     const name = this.userService?.loggeduser
-    if (name && Array.isArray(name) && name.length > 0) {
-      // Assuming the first user in the array is the logged-in user, you can access its properties.
-      this.userName = name[0].name;
+    if (name) {
+      this.userName = name.name;
     } else {
       this.userName = "Guest";
     }

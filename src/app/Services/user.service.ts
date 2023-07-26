@@ -30,7 +30,7 @@ export class UserService {
       map((userResponse: userInfo[]) => {
         const response: any = {
           success: false,
-          user: userResponse,
+          user: userResponse[0],
         };
 
         const authenticatedUser = userResponse.find(

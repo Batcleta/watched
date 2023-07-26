@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, from, of } from 'rxjs';
 import { catchError, switchMap, map } from 'rxjs/operators';
 import { movieObject } from '../@types/movie-object-type';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root',
@@ -10,12 +11,16 @@ import { movieObject } from '../@types/movie-object-type';
 export class MovieService {
   private readonly dbUrl = 'http://localhost:3004/movies';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private userService: UserService) { }
 
   getMoviesList(): Observable<movieObject[]> {
     return from(this.http.get<movieObject[]>(this.dbUrl)).pipe(
       catchError((error) => {
         throw error;
+      }),
+      map((movies: movieObject[]) => {
+        const userId = parseInt(this.userService.loggeduser.id);
+        return movies.filter((movie: movieObject) => movie.user_id === userId);
       })
     );
   }
@@ -32,6 +37,7 @@ export class MovieService {
 
   addNewMovie(movie: movieObject): Observable<movieObject> {
 
+
     return this.checkIfExists(movie).pipe(
       switchMap((exists: boolean) => {
 
@@ -39,6 +45,7 @@ export class MovieService {
           throw new Error('Movie with the same ID already exists.');
         }
 
+        movie.user_id = parseInt(this.userService.loggeduser.id)
         return this.http.post<movieObject>(this.dbUrl, movie).pipe(
           catchError((error) => {
             throw error;
@@ -61,8 +68,6 @@ export class MovieService {
 
   getMovieById(movieId: number): Observable<movieObject | null> {
     const url = `${this.dbUrl}/${movieId}`;
-
-    console.log(url)
     return this.http.get<movieObject>(url).pipe(
       catchError((error) => {
 

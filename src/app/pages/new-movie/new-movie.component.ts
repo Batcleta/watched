@@ -56,7 +56,6 @@ export class NewMovieComponent implements OnInit {
   }
 
   selectMovie(movie: movieObject) {
-    console.log(movie)
     this.movieService.addNewMovie(movie)?.subscribe(
       (newMovie: movieObject | undefined) => {
         if (newMovie) {

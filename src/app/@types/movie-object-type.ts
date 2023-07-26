@@ -16,4 +16,5 @@ export type movieObject = {
   watched?: boolean;
   rating?: string;
   comment?: string;
+  user_id?: number
 };
