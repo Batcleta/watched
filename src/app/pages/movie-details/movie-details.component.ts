@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { movieObject } from 'src/app/@types/movie-object-type';
 import { movieWatched } from 'src/app/@types/movie-watched-type';
@@ -23,7 +23,8 @@ export class MovieDetailsComponent {
 
   constructor(
     private movieService: MovieService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -71,9 +72,6 @@ export class MovieDetailsComponent {
 
     const movieIndex = this.movies.findIndex((m) => m.id === this.movie?.id);
     if (movieIndex !== -1) {
-      // this.movies[movieIndex].watched = watchedParams.watched;
-      // this.movies[movieIndex].rating = watchedParams.rating;
-      // this.movies[movieIndex].comment = watchedParams.comment;
 
       this.movies[movieIndex] = {
         ...this.movies[movieIndex],
@@ -82,7 +80,8 @@ export class MovieDetailsComponent {
 
       this.movieService.updateMovie(this.movies[movieIndex]).subscribe(
         (updatedMovie: string) => {
-          console.log('Movie updated successfully:', updatedMovie);
+          alert('Movie updated successfully:' + updatedMovie);
+          this.router.navigate([""])
         },
         (error) => {
           console.error('Error updating movie:', error);

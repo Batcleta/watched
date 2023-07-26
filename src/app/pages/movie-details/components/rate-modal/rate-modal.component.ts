@@ -7,7 +7,7 @@ import { movieWatched } from 'src/app/@types/movie-watched-type';
   templateUrl: './rate-modal.component.html',
   styleUrls: ['./rate-modal.component.css']
 })
-export class RateModalComponent implements OnInit{
+export class RateModalComponent implements OnInit {
   @Output() rateSubmitted: EventEmitter<any> = new EventEmitter<any>();
   @Output() closeModal: EventEmitter<movieWatched> = new EventEmitter<movieWatched>();
 
@@ -20,9 +20,9 @@ export class RateModalComponent implements OnInit{
 
   createForm() {
     this.ratingForm = this.formBuilder.group({
-      watchedStatus: [true],
+      watched: [true],
       rating: [null],
-      comment: ['', Validators.maxLength(200)]
+      comment: ['', Validators.required, , Validators.maxLength(200)]
     });
   }
 
@@ -30,6 +30,8 @@ export class RateModalComponent implements OnInit{
     if (this.ratingForm.valid) {
       const formData = this.ratingForm.value;
       formData.rating = formData.rating === true ? 'liked' : 'disliked';
+
+      console.log(formData)
       this.rateSubmitted.emit(formData);
     }
   }
