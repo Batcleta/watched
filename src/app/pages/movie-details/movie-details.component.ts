@@ -15,7 +15,6 @@ export class MovieDetailsComponent {
 
   isModalOpen = false;
   back: string = '< Back';
-  movies: movieObject[] = [];
   movie?: movieObject;
 
   private getMoviesSubscription: Subscription | undefined;
@@ -28,7 +27,8 @@ export class MovieDetailsComponent {
   ) { }
 
   ngOnInit() {
-    this.fetchMovies();
+    const movieIdFromRoute = Number(this.route.snapshot.paramMap.get('movieId'));
+    this.fetchMovies(movieIdFromRoute);
   }
 
   ngOnDestroy() {
@@ -40,15 +40,11 @@ export class MovieDetailsComponent {
     }
   }
 
-  fetchMovies() {
-    this.getMoviesSubscription = this.movieService.getMoviesList().subscribe(
-      (movies: movieObject[]) => {
-        this.movies = movies;
-
-        const movieIdFromRoute = Number(this.route.snapshot.paramMap.get('movieId'));
-        this.movie = this.movies.find((movie) => movie.id === movieIdFromRoute);
-
-        if (this.movie) {
+  fetchMovies(movieId: number) {
+    this.getMoviesSubscription = this.movieService.getMovieById(movieId).subscribe(
+      (movie: movieObject | null) => {
+        if (movie) {
+          this.movie = movie;
           const date = new Date(this.movie.release_date);
           this.movie.release_date = date.toLocaleDateString().toString();
         }
@@ -69,16 +65,11 @@ export class MovieDetailsComponent {
 
   onModalSubmited(watchedParams: movieWatched) {
     this.onCloseModal();
+    if (this.movie) {
 
-    const movieIndex = this.movies.findIndex((m) => m.id === this.movie?.id);
-    if (movieIndex !== -1) {
+      this.movie = { ...this.movie, ...watchedParams }
 
-      this.movies[movieIndex] = {
-        ...this.movies[movieIndex],
-        ...watchedParams
-      };
-
-      this.movieService.updateMovie(this.movies[movieIndex]).subscribe(
+      this.movieService.updateMovie(this.movie).subscribe(
         (updatedMovie: string) => {
           alert('Movie updated successfully:' + updatedMovie);
           this.router.navigate([""])
@@ -87,7 +78,10 @@ export class MovieDetailsComponent {
           console.error('Error updating movie:', error);
         }
       );
+
     }
+
+
   }
 
 }

@@ -31,7 +31,6 @@ export class RateModalComponent implements OnInit {
       const formData = this.ratingForm.value;
       formData.rating = formData.rating === true ? 'liked' : 'disliked';
 
-      console.log(formData)
       this.rateSubmitted.emit(formData);
     }
   }

@@ -1,5 +1,5 @@
 export type movieWatched = {
-    watched: boolean,
-    rating: string,
-    comment: string,
+    watched?: boolean,
+    rating?: string,
+    comment?: string,
 }
